@@ -1,5 +1,6 @@
 package com.schedule_management.event;
 
+import com.schedule_management.exception.InvalidEventException;
 import lombok.Getter;
 
 import java.time.Duration;
@@ -20,6 +21,13 @@ public abstract class AbstractEvent implements Event {
 
     protected AbstractEvent(int id, String title,
                             ZonedDateTime startAt, ZonedDateTime endAt) {
+        // 예외처리 및 유효성 체크
+        if( startAt.isAfter(endAt)){
+            throw new InvalidEventException(
+                    String.format("시작일은 종료일보다 이전이어야 합니다. 시작일=%s, 종료일=%s", startAt,endAt)
+            );
+        }
+
         this.id = id;
         this.title = title;
         this.startAt = startAt;
