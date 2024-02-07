@@ -10,7 +10,9 @@ public abstract class AbstractEvent implements Event {
     private final int id;
     @Getter
     private String title;
+    @Getter
     private ZonedDateTime startAt; //ZonedDateTime: LocalDateTime 과 달리 시차 개념을 가짐
+    @Getter
     private ZonedDateTime endAt;
     private Duration duration; //Duration: 두 시간 사이의 간격을 나타냄
 
