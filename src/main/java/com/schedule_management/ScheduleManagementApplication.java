@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class ScheduleManagementApplication {
 
     public static void main(String[] args) {
-        List<AbstractEvent> list = new ArrayList<>();
+        Schedule schedule = new Schedule();
+
         HashSet<String> participants = new HashSet<>();
         participants.add("bien");
 
@@ -25,19 +26,22 @@ public class ScheduleManagementApplication {
                 participants, "meetingRoomA",
                 "스터디"
         );
-        list.add(meeting1);
+        schedule.add(meeting1);
 
         Todo todo1 = new Todo(
                 2, "todo1",
-                ZonedDateTime.now(), ZonedDateTime.now().plusHours(2),
+                ZonedDateTime.now().plusHours(3), ZonedDateTime.now().plusHours(4),
                 "근태조정신청"
         );
-        list.add(todo1);
 
-        list.forEach(Event::print);
+        Todo todo2 = new Todo(
+                3, "todo1",
+                ZonedDateTime.now().plusHours(5), ZonedDateTime.now().plusHours(4),
+                "테스트"
+        );
+        schedule.add(todo1);
 
-        list.stream().filter(each-> each.support(EventType.MEETING))
-                .forEach(Event::print);
+        schedule.printAll();
 
     }
 
