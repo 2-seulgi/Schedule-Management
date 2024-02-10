@@ -20,7 +20,7 @@ public class Meeting extends AbstractEvent{
     }
     @Override
     public void print(){
-        System.out.printf("[회의] %s : %s%n", getTitle(), agenda);
+        System.out.printf("[회의] %s : %s (참석자 : %s)%n", getTitle(), agenda , participants);
 
     }
 
