@@ -1,5 +1,6 @@
 package com.schedule_management.event;
 
+import com.schedule_management.event.update.AbstractAuditableEvent;
 import com.schedule_management.exception.InvalidEventException;
 import lombok.Getter;
 
@@ -41,6 +42,28 @@ public abstract class AbstractEvent implements Event {
         this.modifiedAt = now;
 
         this.deletedYn = false;
+    }
+
+    public void validateAndUpdate(AbstractAuditableEvent update){
+        if(deletedYn == true){
+            throw new RuntimeException("이미 삭제된 이벤트는 수정할 수 없음.");
+        }
+        defaultUpdate(update);
+        update(update);
+    }
+
+    private void defaultUpdate(AbstractAuditableEvent update){
+        this.title = getTitle();
+        this.startAt = getStartAt();
+        this.endAt = getEndAt();
+        this.duration = Duration.between(this.startAt , this.endAt);
+        this.modifiedAt = ZonedDateTime.now();
+    }
+
+    protected abstract void update(AbstractAuditableEvent update);
+
+    public void delete(boolean deletedYn){
+        this.deletedYn = deletedYn;
     }
 
 

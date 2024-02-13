@@ -1,5 +1,8 @@
 package com.schedule_management.event;
 
+import com.schedule_management.event.update.AbstractAuditableEvent;
+import com.schedule_management.event.update.UpdateMeeting;
+
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -27,5 +30,14 @@ public class Meeting extends AbstractEvent{
     @Override
     public boolean support(EventType type) {
         return type == EventType.MEETING;
+    }
+
+
+    @Override
+    protected void update(AbstractAuditableEvent update) {
+        UpdateMeeting updateMeeting = (UpdateMeeting) update;
+        this.participants = updateMeeting.getParticipants();
+        this.meetingRoom = updateMeeting.getMeetingRoom();
+        this.agenda = updateMeeting.getAgenda();
     }
 }

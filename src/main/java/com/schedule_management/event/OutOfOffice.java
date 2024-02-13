@@ -1,5 +1,7 @@
 package com.schedule_management.event;
 
+import com.schedule_management.event.update.AbstractAuditableEvent;
+
 import java.time.ZonedDateTime;
 
 public class OutOfOffice extends AbstractEvent {
@@ -9,6 +11,12 @@ public class OutOfOffice extends AbstractEvent {
     {
         super(id, title, startAt, endAt);
     }
+
+    @Override
+    protected void update(AbstractAuditableEvent update) {
+
+    }
+
     @Override
     public void print() {
 

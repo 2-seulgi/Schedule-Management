@@ -1,17 +1,13 @@
 package com.schedule_management;
 
 import com.schedule_management.event.*;
+import com.schedule_management.event.update.UpdateMeeting;
 import com.schedule_management.reader.EventCsvReader;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class ScheduleManagementApplication {
@@ -24,8 +20,23 @@ public class ScheduleManagementApplication {
 
         List<Meeting> meetings = csvReader.readMeetings(meetingCsvPath);
         meetings.forEach(schedule::add);
+        Meeting meeting = meetings.get(0);
+        meeting.print();
+        meeting.delete(true);
+        System.out.println("삭제 후 수정 -----");
+        meetings.get(0).validateAndUpdate(
+                new UpdateMeeting(
+                        "업무 공유"
+                        , ZonedDateTime.now()
+                        , ZonedDateTime.now()
+                        , null
+                        ,"A"
+                        ,"new agenda"
+                )
+        );
+        meeting.print();
 
-        schedule.printAll();
+        //schedule.printAll();
 
     }
 
