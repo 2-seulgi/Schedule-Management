@@ -19,8 +19,9 @@ public class OutOfOffice extends AbstractEvent {
 
     @Override
     public void print() {
-
+        System.out.printf("[출장] %s : 출장기간(%s-%s)%n", getTitle(), getStartAt(), getEndAt());
     }
+
 
     @Override
     public boolean support(EventType type) {
