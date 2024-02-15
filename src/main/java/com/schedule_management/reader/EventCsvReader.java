@@ -22,11 +22,17 @@ import java.util.List;
 import static com.fasterxml.jackson.databind.cfg.CoercionInputShape.Array;
 
 public class EventCsvReader {
+
+    private final RawCsvReader rawCsvReader;
+
+    public EventCsvReader(RawCsvReader rawCsvReader){
+        this.rawCsvReader = rawCsvReader;
+    }
     public List<Meeting> readMeetings(String path) throws IOException {
         List<Meeting> result = new ArrayList<>();
 
         // 데이터를 읽는 부분
-        List<String[]> read = readAll(path);
+        List<String[]> read = rawCsvReader.readAll(path);
         for(int i = 0 ; i< read.size(); i++){
             if(skipHeader(i)){
                 continue;
@@ -65,7 +71,7 @@ public class EventCsvReader {
         List<NoDisturbance> result = new ArrayList<>();
 
         // 데이터를 읽는 부분
-        List<String[]> read = readAll(path);
+        List<String[]> read = rawCsvReader.readAll(path);
         for(int i = 0 ; i< read.size(); i++){
             if(skipHeader(i)){
                 continue;
@@ -101,7 +107,7 @@ public class EventCsvReader {
         List<OutOfOffice> result = new ArrayList<>();
 
         // 데이터를 읽는 부분
-        List<String[]> read = readAll(path);
+        List<String[]> read = rawCsvReader.readAll(path);
         for(int i = 0 ; i< read.size(); i++){
             if(skipHeader(i)){
                 continue;
@@ -137,7 +143,7 @@ public class EventCsvReader {
         List<Todo> result = new ArrayList<>();
 
         // 데이터를 읽는 부분
-        List<String[]> read = readAll(path);
+        List<String[]> read = rawCsvReader.readAll(path);
         for(int i = 0 ; i< read.size(); i++){
             if(skipHeader(i)){
                 continue;
@@ -174,11 +180,4 @@ public class EventCsvReader {
         return i == 0;
     }
 
-    public List<String[]> readAll(String path) throws IOException {
-        InputStream in = getClass().getResourceAsStream(path);
-        InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-
-        CSVReader csvReader = new CSVReader(reader);
-        return csvReader.readAll();
-    }
 }

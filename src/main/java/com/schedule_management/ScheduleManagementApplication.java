@@ -1,12 +1,11 @@
 package com.schedule_management;
 
 import com.schedule_management.event.*;
-import com.schedule_management.event.update.UpdateMeeting;
 import com.schedule_management.reader.EventCsvReader;
+import com.schedule_management.reader.RawCsvReader;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @SpringBootApplication
@@ -15,7 +14,7 @@ public class ScheduleManagementApplication {
     public static void main(String[] args) throws IOException {
         Schedule schedule = new Schedule();
 
-        EventCsvReader csvReader = new EventCsvReader();
+        EventCsvReader csvReader = new EventCsvReader(new RawCsvReader());
         String meetingCsvPath = "/data/Meeting.csv";
         String noDisturbanceCsvPath = "/data/no_disturbance.csv";
         String outOfOfficeCsvPath = "/data/out_of_office.csv";
